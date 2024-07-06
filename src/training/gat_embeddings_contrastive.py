@@ -229,7 +229,6 @@ def contrastive_training_embeddings(config):
             best_model = best_model.to(device)
     except KeyboardInterrupt:
         pass
-    #test_loss = test_evaluation(best_model, train_loader, config)
     test_loss = test_funsd(best_model, test_loader, config)
 
     print(" | Test Loss: {:.4f}".format(test_loss))

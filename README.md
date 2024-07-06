@@ -66,6 +66,29 @@ This repository provides the implementation of GeoContrastNet, as detailed in ou
   python main.py --run-name <your_yaml_file> --checkpoint <path_to_pretrained_weights>
   ```
 
+### Training with your own graphs
+
+
+Training with Your Own Graphs
+
+Training is done in two stages, each requiring its own YAML file. Example YAML files for each stage can be found in the setups_stage1 and setups_stage2 folders.
+
+In the first stage, the expected input is a dgl.graph that can be created from various domains. This graph should have geometric features in its nodes and edges. The graph for the second stage will be the output graph from the first stage.
+
+The YAML file for the firts stage defines various hyperparameters for the contrastive setting. In this stage, we use geometric features. The yaml contains a key named features, that contains two sub keys: node and edge. This fields define the geometric features of the nodes and edges used in this module. The node field defines the features in g.ndata that will be used and the same in the edge field and g.edata. Additionally, the YAML file has a model key, which refers to the model definition in models/contrastive_model.py.
+
+Once your dgl.graph includes g.ndata and g.edata as described, run the following command:
+```
+python V2_contrastive_datasets.py --run-name <your_yaml_file_stage1>
+```
+When the training completes, three graphs will be created: one each for training, validation, and testing data.
+
+Next, create a second YAML file for the second stage, specifying the paths to the graphs created in the first stage. Then run:
+
+```
+python main.py --run-name <your_yaml_file_stage2>
+```
+
 ## Additional Resources
 - **CHEKPOINTS**: https://drive.google.com/drive/folders/1UlbQZPdrphr-qdF64EveORM31zBWTMuj?usp=drive_link
 - **Stage 1 YAML files**: Located in `setups_stage1` folder.
