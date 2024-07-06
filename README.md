@@ -68,9 +68,6 @@ This repository provides the implementation of GeoContrastNet, as detailed in ou
 
 ### Training with your own graphs
 
-
-Training with Your Own Graphs
-
 Training is done in two stages, each requiring its own YAML file. Example YAML files for each stage can be found in the setups_stage1 and setups_stage2 folders.
 
 In the first stage, the expected input is a dgl.graph that can be created from various domains. This graph should have geometric features in its nodes and edges. The graph for the second stage will be the output graph from the first stage.
