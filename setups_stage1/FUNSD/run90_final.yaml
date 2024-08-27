@@ -1,0 +1,46 @@
+# Same configuration that run25 but i have changed how i use the dropout in the architecture
+
+contrastive_learning:
+  margin: 0.3
+  type_of_triplets: 'all'
+  distance_metric: 'LpDistance'
+
+pretrainedWeights: False
+epochs: 200
+batch_size: 4
+loader: True
+added_features: 24
+
+model_name: "class_contrastive_model" 
+optimizer: "ADAMW"
+lr: 0.001
+val_size: 0.1
+
+momentum: 0.9
+weight_decay: 0.0001
+
+schedule_name: "MultiStepLR"
+milestones: [100, 160]
+gamma: 0.1
+# Values for the CosineAnnealingLR scheduler
+T_max: 200
+eta_min: 0.00001
+
+Tresh_distance: False 
+layers_dimensions: [9, 15, 17]
+dropout: 0.3
+mask_rate: 0.0
+concat_hidden: False
+
+activation: "relu"
+
+pickle_path_train_kmeans: '/home/nbiescas/Desktop/CVC/CVC_internship/PKL_Graphs/V2_Kmeans_dis_ntresh_discrete/train_Kmeans_dis_ntresh_discrete.pkl'
+pickle_path_val_kmeans: '/home/nbiescas/Desktop/CVC/CVC_internship/PKL_Graphs/V2_Kmeans_dis_ntresh_discrete/val_Kmeans_dis_ntresh_discrete.pkl'
+pickle_path_test_kmeans: '/home/nbiescas/Desktop/CVC/CVC_internship/PKL_Graphs/V2_Kmeans_dis_ntresh_discrete/test_Kmeans_dis_ntresh_discrete.pkl'
+
+network: 
+  checkpoint: ~
+
+features:
+  node: ['Geometric']
+  edge: ['distance_not_tresh', 'angle', 'discrete_bin_edges', 'feat']

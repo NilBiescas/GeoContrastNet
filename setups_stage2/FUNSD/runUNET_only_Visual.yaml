@@ -1,0 +1,64 @@
+run_name: "run118_featuresContrastive_run109"
+
+epochs: 1000 #1200
+batch_size: 18
+loader: True
+
+model_name: "UNET_MaskedGat_contrastive_UNET" 
+optimizer: "ADAM"
+lr: 0.001
+val_size: 0.1
+
+momentum: 0.9
+weight_decay: 0.0001
+
+schedule_name: "CosineAnnealingLR"
+milestones: [300, 600, 800]
+gamma: 0.1
+# Values for the CosineAnnealingLR scheduler
+T_max: 200
+eta_min: 0.00001
+
+
+activation: "relu"
+reduce: "mean"
+train_method: "contrastiv_node_edge_training"
+kmeans_partition: True
+
+train_graphs :     '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/train_geom_UNET.bin'
+validation_graphs: '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/val_geom_UNET.bin'
+test_graphs:       '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/test_geom_UNET.bin'
+
+train_img: '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/imgs_train.pkl'
+val_img: '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/imgs_val.pkl'
+test_img: '/data2/users/sbiswas/nil_biescas/PKL_Graphs/UNET_GRAPHS/imgs_test.pkl'
+
+Dataset_partitions:
+  n: 5
+  m: 5
+
+network: 
+  checkpoint: ~
+
+node_classes: 4
+edge_classes: 2
+
+layers_dimensions: [1500, 700, 450, 70] # RECORDA QUE LA ULTIMA LAYER PASSARA DE 100 A NODE_NUM_CLASSES
+
+cfg_edge_predictor:
+    layers_dimensions: [3014, 1000, 450, 50] # RECORDA QUE LA ULTIMA LAYER PASSARA DE 20 A EDGE_NUM_CLASSES I QUE 
+    hidden_dim: 20                              # RECORDA QUE LA ULTIMA LAYER HA DE CORESPONDRE AMB LA HIDDEN DIM
+    out_classes: 2                  # RECORDA QUE QUE PASSES DE LA ULTIMA LAYER A 20 I DESPUES DE 20
+    dropout: 0.2
+    edge_pred_features: 14 # Polar coordinates + class probablities for the src and dst nodes
+
+in_dim: 1448
+hidden_dim: 1500
+num_heads: 1
+num_layers: 2
+feat_drop: 0.1
+attn_drop: 0.1
+negative_slope: 0.2
+residual: True
+
+mask_rate: 0.2
